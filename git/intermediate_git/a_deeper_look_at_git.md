@@ -35,10 +35,10 @@ Let's look at some ways we can change recent and distant history to fit our need
 Before we get started with the lesson, let's create a Git playground in which we can safely follow along with the code and perform history-changing operations. Go to GitHub, and as you have in the past, create a new repository. Call it whatever you'd like, and clone this repository to your local system. Now, let's `cd` into the repository we just cloned and create some new files! Once you're in the repository, follow along with the following commands (including the typo). Look them up if you're confused about anything that's happening.
 
 ```bash
-  $ touch test{1..4}.md
-  $ git add test1.md && git commit -m 'Create first file'
-  $ git add test2.md && git commit -m 'Create send file'
-  $ git add test3.md && git commit -m 'Create third file and create fourth file'
+   touch test{1..4}.md
+   git add test1.md && git commit -m 'Create first file'
+   git add test2.md && git commit -m 'Create send file'
+   git add test3.md && git commit -m 'Create third file and create fourth file'
 ```
 
 #### Setting up the code editor
@@ -52,8 +52,8 @@ To set up your code editor properly, you can follow the instructions provided in
 So if we look at the last commit we made *Uh-Oh!*, if you type in `git status` and `git log` you can see we forgot to add a file! Let's add our missing file and run `git commit --amend`
 
 ```bash
-  $ git add test4.md
-  $ git commit --amend
+   git add test4.md
+   git commit --amend
 ```
 
 What happened here is we first updated the staging area to include the missing file, and then we replaced the last commit with our new one to include the missing file. If we wanted to, we could have changed the message of the commit and it would have overwritten the message of the past commit.
@@ -67,8 +67,8 @@ Now let's say we have commits further back in our history that we want to modify
 `git rebase -i` is a command which allows us to interactively stop after each commit we're trying to modify, and then make whatever changes we wish. We do have to tell this command which is the last commit we want to edit. For example, `git rebase -i HEAD~2` allows us to edit the last two commits. Let's see what this looks like in action, go ahead and type in:
 
 ```bash
-  $ git log
-  $ git rebase -i HEAD~2
+   git log
+   git rebase -i HEAD~2
 ```
 
 You should notice that when rebasing, the commits are listed in opposite order compared to how we see them when we use `git log`. Take a minute to look through all of the options the interactive tool offers you. Now let's look at the commit messages at the top of the tool. If we wanted to edit one of these commits, we would change the word `pick` to be `edit` for the appropriate commit. If we wanted to remove a commit, we would remove it from the list, and if we wanted to change their order, we would change their position in the list. Let's see what an edit looks like!
@@ -111,9 +111,9 @@ Before diving into Remotes, we're going to have a look at a handy Git command ca
 We can open up the tool just like last time, change `pick` to `edit` for the commit we're going to split. But instead, what we're going to do is run `git reset HEAD^`, which resets the commit to the one right before HEAD. This allows us to add the files individually, add, and commit them individually. All together it would look something like this:
 
 ```bash
-$ git reset HEAD^
-$ git add test3.md && git commit -m 'Create third file'
-$ git add test4.md && git commit -m 'Create fourth file'
+ git reset HEAD^
+ git add test3.md && git commit -m 'Create third file'
+ git add test4.md && git commit -m 'Create fourth file'
 ```
 
 Let's start by looking a bit closer at what happened here. When you ran `git reset`, you reset the current branch by pointing HEAD at the commit right before it. At the same time, `git reset` also updated the index (the staging area) with the contents of wherever HEAD is now pointed. So our staging area was also reset to what it was at the prior commit - which is great - because this allowed us to add and commit both files separately.
